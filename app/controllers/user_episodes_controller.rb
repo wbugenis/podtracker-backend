@@ -1,0 +1,2 @@
+class UserEpisodesController < ApplicationController
+end
