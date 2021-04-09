@@ -42,3 +42,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'unirest'
 gem 'open-uri'
 gem 'rss'
+gem 'active_model_serializers'

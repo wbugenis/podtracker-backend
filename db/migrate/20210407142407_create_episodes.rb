@@ -5,7 +5,8 @@ class CreateEpisodes < ActiveRecord::Migration[6.1]
       t.string :description
       t.string :runtime
       t.string :filepath
-      t.time :published_date
+      t.string :filetype
+      t.datetime :published_date
       t.belongs_to :podcast, null: false, foreign_key: true
 
       t.timestamps

@@ -6,7 +6,7 @@ class CreatePodcasts < ActiveRecord::Migration[6.1]
       t.string :description, default: nil
       t.string :podcast_img_url
       t.string :podcast_home_url, default: nil
-      t.time :last_rss_scan, default: nil
+      t.datetime :last_rss_scan, default: DateTime.new
 
       t.timestamps
     end

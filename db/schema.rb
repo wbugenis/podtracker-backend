@@ -20,7 +20,8 @@ ActiveRecord::Schema.define(version: 2021_04_07_142708) do
     t.string "description"
     t.string "runtime"
     t.string "filepath"
-    t.time "published_date"
+    t.string "filetype"
+    t.datetime "published_date"
     t.bigint "podcast_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -33,7 +34,7 @@ ActiveRecord::Schema.define(version: 2021_04_07_142708) do
     t.string "description"
     t.string "podcast_img_url"
     t.string "podcast_home_url"
-    t.time "last_rss_scan"
+    t.datetime "last_rss_scan", default: "-4712-01-01 00:00:00"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

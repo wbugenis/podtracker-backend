@@ -10,6 +10,6 @@ Rails.application.routes.draw do
   post "/search/info", to: "search#rssInfo"
   get "/search/:term", to: "search#search"
   post "/login", to: "users#login"
-
+  get "/podcasts/:id/episodes", to: "podcasts#episodes"
   
 end
