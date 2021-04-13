@@ -60,11 +60,12 @@ ActiveRecord::Schema.define(version: 2021_04_07_142708) do
 
   create_table "user_episodes", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.string "episode_belongs_to"
-    t.boolean "listened"
-    t.integer "current_time"
+    t.bigint "episode_id", null: false
+    t.boolean "listened", default: false
+    t.integer "current_time", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["episode_id"], name: "index_user_episodes_on_episode_id"
     t.index ["user_id"], name: "index_user_episodes_on_user_id"
   end
 
@@ -79,5 +80,6 @@ ActiveRecord::Schema.define(version: 2021_04_07_142708) do
   add_foreign_key "queued_items", "users"
   add_foreign_key "subscriptions", "podcasts"
   add_foreign_key "subscriptions", "users"
+  add_foreign_key "user_episodes", "episodes"
   add_foreign_key "user_episodes", "users"
 end

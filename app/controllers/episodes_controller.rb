@@ -3,5 +3,5 @@ class EpisodesController < ApplicationController
         @episodes = Episode.all
         render json: @episodes
     end
-    
+
 end

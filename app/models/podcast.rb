@@ -27,10 +27,29 @@ class Podcast < ApplicationRecord
             
             if self.last_rss_scan < lastUpdate
                 feed.items.each{ |item| 
-                    puts item.title
-                    puts item.pubDate
-                    self.episodes.create(title:item.title, description:item.description, runtime:"#{item.itunes_duration.hour}h#{item.itunes_duration.minute}m#{item.itunes_duration.second}s", published_date:item.pubDate,
-                        filepath: item.enclosure.url, filetype: item.enclosure.type
+                    
+                    if (item.itunes_duration) 
+                        runtime = item.itunes_duration.content
+                    else 
+                        runtime = "not found"
+                    end
+                    
+                    if item.enclosure
+                        filepath = item.enclosure.url
+                        filetype = item.enclosure.type 
+                    else 
+                        filepath = nil
+                        filetype = nil
+                    end
+                    
+                    self.episodes.create(
+                        title: item.title, 
+                        description: item.description,
+                        runtime: runtime,
+                        # runtime:"#{item.itunes_duration.hour}h#{item.itunes_duration.minute}m#{item.itunes_duration.second}s", 
+                        published_date: item.pubDate,
+                        filepath:  filepath,
+                        filetype:  filetype
                     )
                 }
             end
