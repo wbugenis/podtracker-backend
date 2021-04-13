@@ -1,5 +1,6 @@
 class Podcast < ApplicationRecord
     has_many :subscriptions
+    has_many :users, through: :subscriptions
     has_many :episodes
 
     validates :title, uniqueness: true

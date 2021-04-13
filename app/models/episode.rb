@@ -3,4 +3,8 @@ class Episode < ApplicationRecord
   has_many :queued_items
   has_many :user_episodes
   validates :title, uniqueness: {scope: :podcast_id}
+
+  def pubDate
+    self.published_date.strftime("%m/%d/%y")
+  end
 end

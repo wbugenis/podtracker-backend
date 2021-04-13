@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     end
 
     def login
-        @user = User.find_by(params[:username])
+        @user = User.find_by(username: params[:username])
         # if @user.password == params[:password]
         if @user
             render json: @user
@@ -14,7 +14,8 @@ class UsersController < ApplicationController
             render json: false
         end
     end
-
+    
+    
     private
 
     def user_params
