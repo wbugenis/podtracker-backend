@@ -15,6 +15,11 @@ class PodcastsController < ApplicationController
         render json: @podcast.episodes
     end
 
+    def feed
+        @podcast = Podcast.find(params[:id])
+        render json: @podcast.get_feed
+    end
+    
     private
 
     def podcast_params 

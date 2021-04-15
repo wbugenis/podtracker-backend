@@ -4,9 +4,15 @@ class Podcast < ApplicationRecord
     has_many :episodes
 
     validates :title, uniqueness: true
-    after_create :get_episodes
-        
-    def get_episodes
+    after_create :get_info
+
+    #Gets podcast's RSS feed to be parsed on the frontend
+    def get_feed
+        Unirest.get(self.rss_feed)
+    end
+    
+    #Populate podcast info not supplied by iTunes from its RSS feed
+    def get_info
         URI.open(self.rss_feed) { |rss|
             feed = RSS::Parser.parse(rss)
 
@@ -16,52 +22,7 @@ class Podcast < ApplicationRecord
                 self.update(description: feed.channel.description)
             else 
                 self.update(description: feed.channel.itunes_summary)
-            end
-            
-            if feed.channel.lastBuildDate
-                lastUpdate = feed.channel.lastBuildDate
-            else
-                lastUpdate = feed.items[0].pubDate
-            end
-            
-            
-            if self.last_rss_scan < lastUpdate
-                feed.items.each{ |item| 
-                    
-                    if (item.itunes_duration) 
-                        runtime = item.itunes_duration.content
-                    else 
-                        runtime = "not found"
-                    end
-                    
-                    if item.enclosure
-                        filepath = item.enclosure.url
-                        filetype = item.enclosure.type 
-                    else 
-                        filepath = nil
-                        filetype = nil
-                    end
-                    
-                    self.episodes.create(
-                        title: item.title, 
-                        description: item.description,
-                        runtime: runtime,
-                        # runtime:"#{item.itunes_duration.hour}h#{item.itunes_duration.minute}m#{item.itunes_duration.second}s", 
-                        published_date: item.pubDate,
-                        filepath:  filepath,
-                        filetype:  filetype
-                    )
-                }
-            end
-
-            if feed.channel.lastBuildDate
-                puts "date block passed"
-                self.update(last_rss_scan: feed.channel.lastBuildDate)
-            else
-                puts "date block failed"
-                self.update(last_rss_scan: Episode.where(podcast_id: self.id).maximum("published_date"))
-            end
-
+            end   
         }
     end
 

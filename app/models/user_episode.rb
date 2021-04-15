@@ -1,4 +1,5 @@
 class UserEpisode < ApplicationRecord
   belongs_to :user
-  belongs_to :episode
+
+  validates :title, uniqueness: true
 end

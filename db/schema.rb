@@ -15,33 +15,18 @@ ActiveRecord::Schema.define(version: 2021_04_07_142708) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "episodes", force: :cascade do |t|
-    t.string "title"
-    t.string "description"
-    t.string "runtime"
-    t.string "filepath"
-    t.string "filetype"
-    t.datetime "published_date"
-    t.bigint "podcast_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["podcast_id"], name: "index_episodes_on_podcast_id"
-  end
-
   create_table "podcasts", force: :cascade do |t|
     t.string "title"
     t.string "rss_feed"
     t.string "description"
     t.string "podcast_img_url"
     t.string "podcast_home_url"
-    t.datetime "last_rss_scan", default: "-4712-01-01 00:00:00"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "queued_items", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.integer "episode_id"
     t.boolean "played", default: false
     t.string "link", default: ""
     t.datetime "created_at", precision: 6, null: false
@@ -60,12 +45,12 @@ ActiveRecord::Schema.define(version: 2021_04_07_142708) do
 
   create_table "user_episodes", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "episode_id", null: false
+    t.integer "podcast_id"
     t.boolean "listened", default: false
     t.integer "current_time", default: 0
+    t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["episode_id"], name: "index_user_episodes_on_episode_id"
     t.index ["user_id"], name: "index_user_episodes_on_user_id"
   end
 
@@ -76,10 +61,8 @@ ActiveRecord::Schema.define(version: 2021_04_07_142708) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "episodes", "podcasts"
   add_foreign_key "queued_items", "users"
   add_foreign_key "subscriptions", "podcasts"
   add_foreign_key "subscriptions", "users"
-  add_foreign_key "user_episodes", "episodes"
   add_foreign_key "user_episodes", "users"
 end
