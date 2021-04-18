@@ -5,6 +5,11 @@ class User < ApplicationRecord
     has_many :episodes, through: :user_episodes
     has_many :queued_items
 
+    has_secure_password
+
+    validates :username, presence: true, uniqueness: true 
+    validates :password, presence: true, length: {minimum: 3} 
+
     def subscribe(podcast)
         puts "hello"
         puts podcast

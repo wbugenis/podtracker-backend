@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   post "/login", to: "users#login"
   get "/user/:id/subscriptions", to: "subscriptions#user_subscriptions"
+  get "/me", to: "users#me"
 
   post "/search/info", to: "search#rssInfo"
   get "/search/:term", to: "search#search"
@@ -18,5 +19,5 @@ Rails.application.routes.draw do
   delete "/subscriptions/:id", to:"subscriptions#destroy"
 
   get "/userepisodes/:userid/:podcastid", to: "user_episodes#retrieve"
-  
+
 end
