@@ -4,6 +4,8 @@ class User < ApplicationRecord
     has_many :user_episodes
     has_many :episodes, through: :user_episodes
     has_many :queued_items
+    
+    belongs_to :playlist
 
     has_secure_password
 

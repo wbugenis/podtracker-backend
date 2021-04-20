@@ -1,3 +1,0 @@
-class QueuedItemsController < ApplicationController
-    
-end

@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_07_142708) do
+ActiveRecord::Schema.define(version: 2021_04_19_234822) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "playlists", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.jsonb "playlist"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_playlists_on_user_id"
+  end
 
   create_table "podcasts", force: :cascade do |t|
     t.string "title"
@@ -23,15 +31,6 @@ ActiveRecord::Schema.define(version: 2021_04_07_142708) do
     t.string "podcast_home_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "queued_items", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.boolean "played", default: false
-    t.string "link", default: ""
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_queued_items_on_user_id"
   end
 
   create_table "subscriptions", force: :cascade do |t|
@@ -61,7 +60,7 @@ ActiveRecord::Schema.define(version: 2021_04_07_142708) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "queued_items", "users"
+  add_foreign_key "playlists", "users"
   add_foreign_key "subscriptions", "podcasts"
   add_foreign_key "subscriptions", "users"
   add_foreign_key "user_episodes", "users"

@@ -7,7 +7,7 @@ class UserEpisodesController < ApplicationController
 
     def update
         @user_episode = UserEpisode.find(params[:id])
-        @user_episode.update(listened: params[:listened])
+        @user_episode.update(user_episode_params)
         render json: @user_episode
     end
 

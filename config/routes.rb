@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :queued_items
+  resources :playlists
   resources :user_episodes
   resources :podcasts
   resources :users
