@@ -22,7 +22,9 @@ class Podcast < ApplicationRecord
                 self.update(description: feed.channel.description)
             else 
                 self.update(description: feed.channel.itunes_summary)
-            end   
+            end
+            
+            self.update(podcast_img_url:feed.channel.itunes_image.href)
         }
     end
 
