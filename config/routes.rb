@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :playlists
   resources :user_episodes
   resources :podcasts
   resources :users
@@ -20,4 +19,5 @@ Rails.application.routes.draw do
 
   get "/userepisodes/:userid/:podcastid", to: "user_episodes#retrieve"
 
+  get "/userepisodes/savetime", to: "user_episodes#save_time"
 end

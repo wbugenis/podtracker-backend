@@ -17,7 +17,7 @@ class Podcast < ApplicationRecord
             feed = RSS::Parser.parse(rss)
 
             self.update(podcast_home_url: feed.channel.link)
-
+            puts feed.channel.link
             if feed.channel.description
                 self.update(description: feed.channel.description)
             else 

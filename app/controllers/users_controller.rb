@@ -19,16 +19,14 @@ class UsersController < ApplicationController
     end
 
     def create
+        puts "*****"
         @user = User.create(user_params)
-
+        
         if @user.valid?
             puts "valid"
             token = JWT.encode({ user_id: @user.id }, ENV["JWT_SECRET"], 'HS256')
             render json: { user: UserSerializer.new(@user), token: token }, status: :created
         else
-            puts "----"
-            puts errors
-            puts "----"
             render json: { errors: @user.errors.full_messages}, status: :precondition_failed
         end
 
@@ -46,11 +44,6 @@ class UsersController < ApplicationController
         else
             render json: {errors: ["Incorrect current password."]}, status: :unauthorized
         end
-    end
-
-    def create
-        @user = User.create(user_params)
-        render json: @user
     end
     
     private

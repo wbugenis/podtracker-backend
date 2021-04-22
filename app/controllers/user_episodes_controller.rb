@@ -6,8 +6,25 @@ class UserEpisodesController < ApplicationController
     end
 
     def update
+        puts " ------"
+        puts "*****"
+        puts params
+        puts "****"
         @user_episode = UserEpisode.find(params[:id])
-        @user_episode.update(user_episode_params)
+        puts "***"
+        puts @user_episode.title
+        puts "***"
+        puts params[:listened]
+        puts "@@@@"
+        if params[:current_time]
+            @user_episode.update(current_time:params[:current_time])
+        end
+        if params[:listened].class == TrueClass || params[:listened].class == FalseClass
+            puts params[:listened].class
+            puts "************"
+            puts params[:listened]
+            @user_episode.update(listened:params[:listened])
+        end
         render json: @user_episode
     end
 

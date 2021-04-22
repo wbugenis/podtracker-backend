@@ -10,18 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_19_234822) do
+ActiveRecord::Schema.define(version: 2021_04_07_142441) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "playlists", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.jsonb "playlist"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_playlists_on_user_id"
-  end
 
   create_table "podcasts", force: :cascade do |t|
     t.string "title"
@@ -46,7 +38,7 @@ ActiveRecord::Schema.define(version: 2021_04_19_234822) do
     t.bigint "user_id", null: false
     t.integer "podcast_id"
     t.boolean "listened", default: false
-    t.integer "current_time", default: 0
+    t.float "current_time", default: 0.0
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -60,7 +52,6 @@ ActiveRecord::Schema.define(version: 2021_04_19_234822) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "playlists", "users"
   add_foreign_key "subscriptions", "podcasts"
   add_foreign_key "subscriptions", "users"
   add_foreign_key "user_episodes", "users"
