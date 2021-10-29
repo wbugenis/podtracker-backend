@@ -2,8 +2,8 @@ class SearchController < ApplicationController
 
     def search
         url = "https://itunes.apple.com/search?term=#{params[:term]}}&entity=podcast"
-        response = Unirest.get(url)
-        render json: response.body["results"]
+        response = Faraday.get(url)
+        render json: response.body
     end
 
     def rssInfo

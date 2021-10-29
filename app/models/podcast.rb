@@ -8,7 +8,10 @@ class Podcast < ApplicationRecord
 
     #Gets podcast's RSS feed to be parsed on the frontend
     def get_feed
-        Unirest.get(self.rss_feed)
+        # Faraday.get(self.rss_feed).body.encode('iso-8859-1').encode('utf-8')
+        URI.open(self.rss_feed){ |rss| 
+            return RSS::Parser.parse(rss)
+        }
     end
     
     #Populate podcast info not supplied by iTunes from its RSS feed
