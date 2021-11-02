@@ -10,17 +10,17 @@ class Podcast < ApplicationRecord
     def get_feed
         # Faraday.get(self.rss_feed).body.encode('iso-8859-1').encode('utf-8')
         URI.open(self.rss_feed){ |rss| 
-            return RSS::Parser.parse(rss)
+            return RSS::Parser.parse(rss, false)
         }
     end
     
     #Populate podcast info not supplied by iTunes from its RSS feed
     def get_info
         URI.open(self.rss_feed) { |rss|
-            feed = RSS::Parser.parse(rss)
+            feed = RSS::Parser.parse(rss, false)
 
             self.update(podcast_home_url: feed.channel.link)
-            puts feed.channel.link
+            
             if feed.channel.description
                 self.update(description: feed.channel.description)
             else 
