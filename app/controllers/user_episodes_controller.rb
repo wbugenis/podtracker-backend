@@ -39,7 +39,6 @@ class UserEpisodesController < ApplicationController
         render json: @user_episode
     end
 
-
     def retrieve
         @user = User.find(params[:userid])
         @user_episodes = @user.user_episodes.where(podcast_id:params[:podcastid])
