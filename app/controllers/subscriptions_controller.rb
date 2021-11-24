@@ -7,14 +7,10 @@ class SubscriptionsController < ApplicationController
 
     def create
         @user = User.find(params[:user][:id])
-        puts @user
         @user.subscriptions.create(params[:podcast][:id])
     end
 
     def subscribe
-        puts "podcast"
-        puts params[:podcast]
-        puts "done"
         @user = User.find(params[:user][:id])
         @podcast = @user.subscribe(params[:podcast])
         render json: @podcast

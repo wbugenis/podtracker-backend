@@ -7,7 +7,6 @@ class SearchController < ApplicationController
     end
 
     def rssInfo
-
         URI.open(params[:rss]) { |rss|
             feed = RSS::Parser.parse(rss, false)
             if feed.channel.description

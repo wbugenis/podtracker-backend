@@ -14,7 +14,6 @@ class User < ApplicationRecord
         @podcast = Podcast.find_by(rss_feed: podcast[:rss_feed])
         
         if !@podcast
-            puts "not found"
             @podcast = Podcast.create(title:podcast[:title], rss_feed:podcast[:rss_feed], podcast_img_url:podcast[:podcast_img_url], description:podcast[:description], podcast_home_url:podcast[:podcast_home_url])
         end
 

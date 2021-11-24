@@ -2,9 +2,6 @@ class UsersController < ApplicationController
     before_action :authenticate, only: [:me]
 
     def me
-        puts "*********"
-        puts @user
-        puts "*******"
         render json: @user
     end
 
@@ -19,11 +16,9 @@ class UsersController < ApplicationController
     end
 
     def create
-        puts "*****"
         @user = User.create(user_params)
         
         if @user.valid?
-            puts "valid"
             token = JWT.encode({ user_id: @user.id }, ENV["JWT_SECRET"], 'HS256')
             render json: { user: UserSerializer.new(@user), token: token }, status: :created
         else
