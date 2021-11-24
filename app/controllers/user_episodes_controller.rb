@@ -21,10 +21,17 @@ class UserEpisodesController < ApplicationController
     end
 
     def save
-        @user_episode = @user.user_episodes.where(title:params[:title])
-        puts params[:title], @user_episode
+        @user = User.find(params[:user_id])
+        list = @user.user_episodes.where(title:params[:title])
+
+        if list.length > 1 
+            @user_episode = @user.user_episodes.find_by(podcast_id:params[:podcast_id])
+        else 
+            @user_episode = list[0]
+        end
 
         if @user_episode
+
             if params[:current_time]
                 @user_episode.update(current_time:params[:current_time])
             end
@@ -32,6 +39,7 @@ class UserEpisodesController < ApplicationController
             if params[:listened].class == TrueClass || params[:listened].class == FalseClass
                 @user_episode.update(listened:params[:listened])
             end
+
         else
             @user_episode = UserEpisode.create(user_episode_params)
         end
@@ -41,12 +49,11 @@ class UserEpisodesController < ApplicationController
 
     def retrieve
         @user = User.find(params[:userid])
-        @user_episodes = @user.user_episodes.where(podcast_id:params[:podcastid])
-        render json: @user_episodes
+        render json: @user.user_episodes
     end
 
     def clear
-        @user = User.find(parans[:userid])
+        @user = User.find(params[:userid])
         @user.user_episodes.delete_all
     end
 

@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   post "/subscriptions", to: "subscriptions#subscribe"
   delete "/subscriptions/:id", to:"subscriptions#destroy"
 
-  get "/userepisodes/:userid/:podcastid", to: "user_episodes#retrieve"
+  get "/user_episodes/all/:userid", to: "user_episodes#retrieve"
   post "/user_episodes/save", to: "user_episodes#save"
   get "/user_episodes/:userid/clear", to: "user_episodes#clear"
 
